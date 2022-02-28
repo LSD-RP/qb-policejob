@@ -10,7 +10,6 @@ LocalPlayer.state.isLoggedIn = false
 local DutyBlips = {}
 
 -- Functions
-
 local function CreateDutyBlips(playerId, playerLabel, playerJob, playerLocation)
     local ped = GetPlayerPed(playerId)
     local blip = GetBlipFromEntity(ped)
@@ -43,7 +42,6 @@ local function CreateDutyBlips(playerId, playerLabel, playerJob, playerLocation)
 end
 
 -- Events
-
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     local player = QBCore.Functions.GetPlayerData()
     PlayerJob = player.job
@@ -113,7 +111,7 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
         -- end
     end
 
-    if (PlayerJob ~= nil) and PlayerJob.name ~= "police" then
+    if JobInfo.name ~= "police" then
         if DutyBlips then
             for k, v in pairs(DutyBlips) do
                 RemoveBlip(v)
@@ -121,21 +119,21 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
         end
         DutyBlips = {}
     end
+    PlayerJob = JobInfo
+    TriggerServerEvent("police:server:UpdateBlips")
 end)
 
 RegisterNetEvent('police:client:sendBillingMail', function(amount)
     SetTimeout(math.random(2500, 4000), function()
-        local gender = "Mr."
+        local gender = Lang:t('info.mr')
         if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
-            gender = "Mrs."
+            gender = Lang:t('info.mrs')
         end
         local charinfo = QBCore.Functions.GetPlayerData().charinfo
         TriggerServerEvent('qb-phone:server:sendNewMail', {
-            sender = "Central Judicial Collection Agency",
-            subject = "Debt collection",
-            message = "Dear " .. gender .. " " .. charinfo.lastname ..
-                ",<br /><br />The Central Judicial Collection Agency (CJCA) charged the fines you received from the police.<br />There is <strong>$" ..
-                amount .. "</strong> withdrawn from your account.<br /><br />Kind regards,<br />Mr. I.K. Graai",
+            sender = Lang:t('email.sender'),
+            subject = Lang:t('email.subject'),
+            message = Lang:t('email.message', {value = gender, value2 = charinfo.lastname, value3 = amount}),
             button = {}
         })
     end)
@@ -172,7 +170,7 @@ RegisterNetEvent('police:client:policeAlert', function(coords, text)
     local transG = 250
     local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
     local blip2 = AddBlipForCoord(coords.x, coords.y, coords.z)
-    local blipText = 'Police Alert - ' ..text
+    local blipText = Lang:t('info.blip_text', {value = text})
     SetBlipSprite(blip, 60)
     SetBlipSprite(blip2, 161)
     SetBlipColour(blip, 1)
@@ -216,10 +214,13 @@ RegisterNetEvent('police:client:SendToJail', function(time)
     TriggerEvent("prison:client:Enter", time)
 end)
 
--- NUI
+RegisterNetEvent('police:client:SendPoliceEmergencyAlert', function()
+    local Player = QBCore.Functions.GetPlayerData()
+    TriggerServerEvent('police:server:policeAlert', Lang:t('info.officer_down', {lastname = Player.charinfo.lastname, callsign = Player.metadata.callsign}))
+    TriggerServerEvent('hospital:server:ambulanceAlert', Lang:t('info.officer_down', {lastname = Player.charinfo.lastname, callsign = Player.metadata.callsign}))
+end)
 
 -- Threads
-
 CreateThread(function()
     for k, station in pairs(Config.Locations["stations"]) do
         local blip = AddBlipForCoord(station.coords.x, station.coords.y, station.coords.z)

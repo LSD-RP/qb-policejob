@@ -4,7 +4,11 @@ game 'gta5'
 description 'QB-PoliceJob'
 version '1.0.0'
 
-shared_script 'config.lua'
+shared_scripts {
+    'config.lua',
+    '@qb-core/shared/locale.lua',
+    'locales/en.lua' -- Change this to your preferred language
+}
 
 client_scripts {
 	'client/main.lua',
@@ -18,7 +22,10 @@ client_scripts {
 	'client/tracker.lua'
 }
 
-server_script 'server/main.lua'
+server_scripts {
+	'@oxmysql/lib/MySQL.lua',
+	'server/main.lua'
+}
 
 ui_page 'html/index.html'
 

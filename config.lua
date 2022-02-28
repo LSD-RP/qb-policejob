@@ -2,12 +2,17 @@ Config = {}
 
 Config.Objects = {
     ["cone"] = {model = `prop_roadcone02a`, freeze = false},
-    ["barier"] = {model = `prop_barrier_work06a`, freeze = true},
-    ["schotten"] = {model = `prop_snow_sign_road_06g`, freeze = true},
+    ["barrier"] = {model = `prop_barrier_work06a`, freeze = true},
+    ["roadsign"] = {model = `prop_snow_sign_road_06g`, freeze = true},
     ["tent"] = {model = `prop_gazebo_03`, freeze = true},
     ["light"] = {model = `prop_worklight_03b`, freeze = true},
 }
 
+Config.MaxSpikes = 5
+
+Config.HandCuffItem = 'handcuffs'
+
+Config.LicenseRank = 2
 Config.Locations = {
    ["duty"] = {
        [1] = vector3(440.91, -976.18, 30.69),
@@ -52,7 +57,7 @@ Config.Locations = {
 
 Config.ArmoryWhitelist = {}
 
-Config.Helicopter = "POLMAV"
+Config.PoliceHelicopter = "POLMAV"
 
 Config.SecurityCameras = {
     hideradar = false,
