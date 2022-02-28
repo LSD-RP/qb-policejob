@@ -718,7 +718,7 @@ RegisterNetEvent('police:server:PutPlayerInVehicle', function(playerId)
     local src = source
     local EscortPlayer = QBCore.Functions.GetPlayer(playerId)
     if EscortPlayer then
-        if EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] then
+        if EscortPlayer.PlayerData.metadata["ishandcuffed"] or EscortPlayer.PlayerData.metadata["isdead"] or EscortPlayer.PlayerData.metadata["inlaststand"] then
             TriggerClientEvent("police:client:PutInVehicle", EscortPlayer.PlayerData.source)
         else
            TriggerClientEvent('QBCore:Notify', src, "Civilian isn't cuffed or dead", 'error')
@@ -900,6 +900,7 @@ RegisterNetEvent('evidence:server:CreateFingerDrop', function(coords)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local fingerId = CreateFingerId()
+    print("created finger print")
     FingerDrops[fingerId] = Player.PlayerData.metadata["fingerprint"]
     TriggerClientEvent("evidence:client:AddFingerPrint", -1, fingerId, Player.PlayerData.metadata["fingerprint"], coords)
 end)

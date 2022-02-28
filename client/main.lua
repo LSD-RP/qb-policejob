@@ -5,7 +5,8 @@ cuffType = 1
 isEscorted = false
 draggerId = 0
 PlayerJob = {}
-onDuty = false
+onDuty = true
+LocalPlayer.state.isLoggedIn = false
 local DutyBlips = {}
 
 -- Functions
@@ -52,7 +53,7 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     TriggerServerEvent("police:server:SetHandcuffStatus", false)
     TriggerServerEvent("police:server:UpdateBlips")
     TriggerServerEvent("police:server:UpdateCurrentCops")
-
+    LocalPlayer.state.isLoggedIn = true
     if player.metadata.tracker then
         local trackerClothingData = {
             outfitData = {
@@ -106,10 +107,10 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
     PlayerJob = JobInfo
     TriggerServerEvent("police:server:UpdateBlips")
     if JobInfo.name == "police" then
-        if PlayerJob.onduty then
-            TriggerServerEvent("QBCore:ToggleDuty")
-            onDuty = false
-        end
+        -- if PlayerJob.onduty then
+        --     TriggerServerEvent("QBCore:ToggleDuty")
+        --     onDuty = false
+        -- end
     end
 
     if (PlayerJob ~= nil) and PlayerJob.name ~= "police" then
@@ -159,10 +160,13 @@ RegisterNetEvent('police:client:UpdateBlips', function(players)
     end
 end)
 
+local recentWaypoint = nil
+
 RegisterNetEvent('police:client:policeAlert', function(coords, text)
     local street1, street2 = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
     local street1name = GetStreetNameFromHashKey(street1)
     local street2name = GetStreetNameFromHashKey(street2)
+    recentWaypoint = coords
     QBCore.Functions.Notify({text = text, caption = street1name.. ' ' ..street2name}, 'police')
     PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
     local transG = 250
@@ -196,6 +200,12 @@ RegisterNetEvent('police:client:policeAlert', function(coords, text)
         end
     end
 end)
+
+RegisterCommand('alert_gpspd', function()
+	if recentWaypoint then SetWaypointOff() SetNewWaypoint(recentWaypoint.x, recentWaypoint.y) end
+end, false)
+
+RegisterKeyMapping('alert_gpspd', 'Set waypoint', 'keyboard', 'Y')
 
 RegisterNetEvent('police:client:SendToJail', function(time)
     TriggerServerEvent("police:server:SetHandcuffStatus", false)

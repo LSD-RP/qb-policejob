@@ -466,7 +466,7 @@ end)
 CreateThread(function()
     while true do
         local sleep = 2000
-        if LocalPlayer.state.isLoggedIn and PlayerJob.name == "police" then
+        if LocalPlayer.state.isLoggedIn then
             local pos = GetEntityCoords(PlayerPedId())
 
             for k, v in pairs(Config.Locations["duty"]) do
@@ -480,11 +480,16 @@ CreateThread(function()
                         end
                         if IsControlJustReleased(0, 38) then
                             onDuty = not onDuty
-                            TriggerServerEvent("police:server:UpdateCurrentCops")
+                            
+                            
+                            -- TriggerEvent("qb_multijob:externalOpen")
+                            if PlayerJob.name == "police" then
+                                TriggerServerEvent("police:server:UpdateCurrentCops")
+                                TriggerServerEvent("police:server:UpdateBlips")
+                            end
                             TriggerServerEvent("QBCore:ToggleDuty")
-                            TriggerServerEvent("police:server:UpdateBlips")
                         end
-                    elseif #(pos - v) < 2.5 then
+                    elseif #(pos - v) < 5 then
                         DrawText3D(v.x, v.y, v.z, "on/off duty")
                     end
                 end
@@ -816,3 +821,16 @@ CreateThread(function()
         Wait(sleep)
     end
 end)
+
+AddEventHandler('onResourceStart', function(resourceName)
+	if (GetCurrentResourceName() ~= resourceName) then
+	  return
+	end
+	if PlayerPedId() then 
+		LocalPlayer.state.isLoggedIn = true
+        local player = QBCore.Functions.GetPlayerData()
+        PlayerJob = player.job
+        onDuty = true
+	end
+
+  end)
