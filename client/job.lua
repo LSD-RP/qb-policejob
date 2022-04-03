@@ -546,11 +546,12 @@ else
     dutyCombo:onPlayerInOut(function(isPointInside)
         if isPointInside then
             inDuty = true
-            if not onDuty then
-                exports['qb-core']:DrawText(Lang:t('info.on_duty'),'left')
-            else
-                exports['qb-core']:DrawText(Lang:t('info.off_duty'),'left')
-            end
+            -- if not onDuty then
+            --     exports['qb-core']:DrawText(Lang:t('info.on_duty'),'left')
+            -- else
+            --     exports['qb-core']:DrawText(Lang:t('info.off_duty'),'left')
+            -- end
+            exports['qb-core']:DrawText(Lang:t('info.on_duty'),'left')
         else
             inDuty = false
             exports['qb-core']:HideText()
@@ -579,33 +580,6 @@ else
 end
 
 CreateThread(function()
-    while true do
-        local sleep = 2000
-        if LocalPlayer.state.isLoggedIn then
-            local pos = GetEntityCoords(PlayerPedId())
-
-            for k, v in pairs(Config.Locations["duty"]) do
-                if #(pos - v) < 5 then
-                    sleep = 5
-                    if #(pos - v) < 1.5 then
-                        if not onDuty then
-                            DrawText3D(v.x, v.y, v.z, Lang:t('info.on_duty'))
-                        else
-                            DrawText3D(v.x, v.y, v.z, Lang:t('info.off_duty'))
-                        end
-                        if IsControlJustReleased(0, 38) then
-                            onDuty = not onDuty
-                            
-                            
-                            -- TriggerEvent("qb_multijob:externalOpen")
-                            if PlayerJob.name == "police" then
-                                TriggerServerEvent("police:server:UpdateCurrentCops")
-                                TriggerServerEvent("police:server:UpdateBlips")
-                            end
-                            TriggerServerEvent("QBCore:ToggleDuty")
-                        end
-                    elseif #(pos - v) < 5 then
-                        DrawText3D(v.x, v.y, v.z, "on/off duty")
     -- Evidence Storage
     local evidenceZones = {}
     for k, v in pairs(Config.Locations["evidence"]) do
@@ -993,6 +967,57 @@ CreateThread(function ()
             end
         else
             sleep = 1000
+        end
+        Wait(sleep)
+    end
+end)
+
+-- Police Vehicle Garage
+CreateThread(function()
+    Wait(1000)
+    local headerDrawn = false
+    while true do
+        local sleep = 2000
+        if PlayerJob.name == "police" then
+            local pos = GetEntityCoords(PlayerPedId())
+            for k, v in pairs(Config.Locations["vehicle"]) do
+                if #(pos - vector3(v.x, v.y, v.z)) < 7.5 then
+                    if onDuty then
+                        sleep = 5
+                        DrawMarker(2, v.x, v.y, v.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 200, 0, 0, 222, false, false, false, true, false, false, false)
+                        if #(pos - vector3(v.x, v.y, v.z)) < 1.5 then
+                            if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                DrawText3D(v.x, v.y, v.z, Lang:t('info.store_veh'))
+                            else
+                                if not headerDrawn then
+                                    headerDrawn = true
+                                    exports['qb-menu']:showHeader({
+                                        {
+                                            header = Lang:t('menu.pol_garage'),
+                                            params = {
+                                                event = 'police:client:VehicleMenuHeader',
+                                                args = {
+                                                    currentSelection = k,
+                                                }
+                                            }
+                                        }
+                                    })
+                                end
+                            end
+                            if IsControlJustReleased(0, 38) then
+                                if IsPedInAnyVehicle(PlayerPedId(), false) then
+                                    QBCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId()))
+                                end
+                            end
+                        else
+                            if headerDrawn then
+                                headerDrawn = false
+                                exports['qb-menu']:closeMenu()
+                            end
+                        end
+                    end
+                end
+            end
         end
         Wait(sleep)
     end
