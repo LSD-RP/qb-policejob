@@ -146,11 +146,23 @@ function TakeOutVehicle(vehicleInfo)
             SetCarItemsInfo()
             SetVehicleNumberPlateText(veh, Lang:t('info.police_plate')..tostring(math.random(1000, 9999)))
             SetEntityHeading(veh, coords.w)
+            
             exports['LegacyFuel']:SetFuel(veh, 100.0)
             closeMenuFull()
             if Config.VehicleSettings[vehicleInfo] ~= nil then
-                QBCore.Shared.SetDefaultVehicleExtras(veh, Config.VehicleSettings[vehicleInfo].extras)
+                QBCore.Shared.SetDefaultVehicleExtras(  veh, Config.VehicleSettings[vehicleInfo].extras)
             end
+            -- SetVehicleModKit(veh, 0)
+            -- SetVehicleMod(veh, 14, 20, false)
+            local props = {}
+            props.modTransmission = 2
+            props.modSuspension = 3
+            props.modArmor = 4
+            props.modTurbo = 0
+            props.modBrakes = 2
+            props.modEngine = 3
+            props.modXenon = 0
+            QBCore.Functions.SetVehicleProperties(veh,props)
             TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
             TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
             TriggerServerEvent("inventory:server:addTrunkItems", QBCore.Functions.GetPlate(veh), Config.CarItems)
@@ -765,7 +777,7 @@ CreateThread(function()
     local headerDrawn = false
     while true do
         local sleep = 2000
-        if LocalPlayer.state.isLoggedIn and PlayerJob.name == "police" then
+        if PlayerJob.name == "police" then
             local pos = GetEntityCoords(PlayerPedId())
             for k, v in pairs(Config.Locations["vehicle"]) do
                 if #(pos - vector3(v.x, v.y, v.z)) < 7.5 then

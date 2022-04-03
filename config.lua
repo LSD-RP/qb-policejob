@@ -142,6 +142,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
 	-- Grade 1
 	[1] = {
@@ -167,6 +170,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
 	-- Grade 2
 	[2] = {
@@ -192,6 +198,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
 	-- Grade 3
 	[3] = {
@@ -217,6 +226,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
 	-- Grade 4
 	[4] = {
@@ -242,6 +254,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [5] = {
         ["police"] = "Police Car 1",
@@ -266,6 +281,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [6] = {
         ["police"] = "Police Car 1",
@@ -290,6 +308,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [7] = {
 		["police"] = "Police Car 1",
@@ -314,6 +335,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [8] = {
         ["police"] = "Police Car 1",
@@ -338,6 +362,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [9] = {
         ["police"] = "Police Car 1",
@@ -362,6 +389,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [10] = {
         ["police"] = "Police Car 1",
@@ -386,6 +416,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [11] = {
         ["police"] = "Police Car 1",
@@ -410,6 +443,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [12] = {
 		["police"] = "Police Car 1",
@@ -434,6 +470,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	},
     [13] = {
         ["police"] = "Police Car 1",
@@ -458,6 +497,9 @@ Config.AuthorizedVehicles = {
         ["h1stinger"] = "Unmarked Pursuit",
         ["15sub"] = "Police WRX",
         ["polrevent"] = "Police Lamborghini",
+        ["polmesa"] = "White Police Mesa",
+        ["polmesa2"] = "Sheriff Police Mesa",
+        ["polumkmesa"] = "Unmarked Police Mesa",
 	}
 }
 

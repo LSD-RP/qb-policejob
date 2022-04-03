@@ -200,6 +200,8 @@ RegisterNetEvent('police:client:policeAlert', function(coords, text)
 end)
 
 RegisterCommand('alert_gpspd', function()
+    local job = QBCore.Functions.GetPlayerData().job.name
+    if job ~= "police" then return end
 	if recentWaypoint then SetWaypointOff() SetNewWaypoint(recentWaypoint.x, recentWaypoint.y) end
 end, false)
 

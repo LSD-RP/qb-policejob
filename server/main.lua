@@ -351,11 +351,11 @@ QBCore.Commands.Add("depot", Lang:t("commands.depot"), {{name = "price", help = 
     end
 end)
 
-QBCore.Commands.Add("impound", Lang:t("commands.impound"), {}, false, function(source)
+QBCore.Commands.Add("impound", Lang:t("commands.impound"), {{name = "price", help = Lang:t('info.impound_price')}}, false, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
-        TriggerClientEvent("police:client:ImpoundVehicle", src, true)
+    if Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "mechanic" then
+        TriggerClientEvent("police:client:ImpoundVehicle", src, false, tonumber(args[1]))
     else
         TriggerClientEvent('QBCore:Notify', src, Lang:t("error.on_duty_police_only"), 'error')
     end
@@ -865,7 +865,11 @@ end)
 RegisterNetEvent('police:server:Impound', function(plate, fullImpound, price, body, engine, fuel)
     local src = source
     local price = price and price or 0
+    local Player = QBCore.Functions.GetPlayer(src)
+    local personName = Player.PlayerData.charinfo['firstname'] .. ' ' .. Player.PlayerData.charinfo['lastname']
+
     if IsVehicleOwned(plate) then
+        TriggerEvent("qb-log:server:CreateLog", "911", "Vehicle Impound", "red", "**".. personName .. ' just impounded ' .. plate .. ' for ' .. price)
         if not fullImpound then
             MySQL.Async.execute(
                 'UPDATE player_vehicles SET state = ?, depotprice = ?, body = ?, engine = ?, fuel = ? WHERE plate = ?',
@@ -877,6 +881,8 @@ RegisterNetEvent('police:server:Impound', function(plate, fullImpound, price, bo
                 {2, body, engine, fuel, plate})
             TriggerClientEvent('QBCore:Notify', src, Lang:t("info.vehicle_seized"))
         end
+    else
+        TriggerClientEvent('QBCore:Notify', src, 'Local\'s ' .. Lang:t("info.vehicle_seized"))
     end
 end)
 
@@ -898,7 +904,7 @@ RegisterNetEvent('evidence:server:CreateFingerDrop', function(coords)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local fingerId = CreateFingerId()
-    print("created finger print")
+    -- print("created finger print")
     FingerDrops[fingerId] = Player.PlayerData.metadata["fingerprint"]
     TriggerClientEvent("evidence:client:AddFingerPrint", -1, fingerId, Player.PlayerData.metadata["fingerprint"], coords)
 end)
