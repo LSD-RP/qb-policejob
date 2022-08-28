@@ -158,6 +158,27 @@ RegisterNetEvent('police:client:BillCommand', function(playerId, price)
     TriggerServerEvent("police:server:BillPlayer", playerId, tonumber(price))
 end)
 
+-- {
+--     id = 'forcename',
+--     title = 'Force Get Name',
+--     icon = 'fingerprint',
+--     type = 'client',
+--     event = 'police:client:ForceGetPlayerInformation',
+--     shouldClose = true
+-- }
+
+RegisterNetEvent('police:client:ForceGetPlayerInformation', function()
+    local player, distance = QBCore.Functions.GetClosestPlayer()
+    if player ~= -1 and distance < 2.5 then
+        local playerId = GetPlayerServerId(player)
+        QBCore.Functions.TriggerCallback('police:server:ForceGetPlayerName', function(name)
+            QBCore.Functions.Notify("This person's name is: " .. name)
+        end, playerId)
+    else
+        QBCore.Functions.Notify("No one nearby")
+    end
+end)
+
 RegisterNetEvent('police:client:JailPlayer', function()
     local player, distance = QBCore.Functions.GetClosestPlayer()
     if player ~= -1 and distance < 2.5 then

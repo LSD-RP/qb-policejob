@@ -225,7 +225,7 @@ QBCore.Commands.Add("jail", Lang:t("commands.jail_player"), {{name = "id", help 
     if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
         local playerId = tonumber(args[1])
         local time = tonumber(args[2])
-        if time > 0 then
+        if time and time > 0 then
             TriggerClientEvent("police:client:JailCommand", src, playerId, time)
         else
             TriggerClientEvent('QBCore:Notify', src, Lang:t('info.jail_time_no'), 'error')
@@ -454,7 +454,7 @@ end)
 QBCore.Commands.Add("takedrivinglicense", Lang:t("commands.drivinglicense"), {}, false, function(source, args)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty then
+    if Player.PlayerData.job.name == "police" then
         TriggerClientEvent("police:client:SeizeDriverLicense", source)
     else
         TriggerClientEvent('QBCore:Notify', src, Lang:t("error.on_duty_police_only"), 'error')
@@ -629,6 +629,16 @@ QBCore.Functions.CreateCallback('police:server:IsPoliceForcePresent', function(s
         end
     end
     cb(retval)
+end)
+
+QBCore.Functions.CreateCallback('police:server:ForceGetPlayerName', function(source, cb, playerId)
+    local Target = QBCore.Functions.GetPlayer(playerId)
+    if Target then
+        local retval = "" .. Target.PlayerData.charinfo['firstname'] .. ' ' .. Target.PlayerData.charinfo['lastname']
+        cb(retval)
+    else
+        cb("error")
+    end
 end)
 
 -- Events
