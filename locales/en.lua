@@ -40,7 +40,8 @@ local Translations = {
         put_anklet_on = 'You put on an ankle tracker on %{firstname} %{lastname}',
         vehicle_flagged = 'Vehicle %{plate} has been flagged for %{reason}',
         impound_vehicle_removed = 'Vehicle taken out of impound!',
-    },
+        impounded = 'Vehicle impounded',
+ },
     info = {
         mr = 'Mr.',
         mrs = 'Mrs.',
@@ -73,7 +74,7 @@ local Translations = {
         cash_found = 'Found $%{cash} on the civilian',
         sent_jail_for = 'You sent the person to prison for %{time} months',
         fine_received = 'You received a fine of $%{fine}',
-        blip_text = 'Police Alert - %{text}',
+        blip_text = 'Police Alert - %{value}',
         jail_time_input = 'Jail time',
         submit = 'Submit',
         time_months = 'Time in Months',
@@ -179,6 +180,7 @@ local Translations = {
         robbing = 'Robbing Person...',
         place_object = 'Placing object..',
         remove_object = 'Removing object..',
+        impound = 'Impounding Vehicle..',
     },
 }
 
